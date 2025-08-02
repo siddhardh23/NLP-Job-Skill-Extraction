@@ -1,36 +1,75 @@
+# 📄 Resume-to-Job Matching using NLP
 
-# 🧠 NLP Job Skill Extraction Project
+An end-to-end NLP project that compares a candidate’s resume with job descriptions to compute a **similarity score** and recommend the best-fit roles.
 
-This project focuses on extracting and analyzing technical skills from job descriptions using Natural Language Processing (NLP). It aims to identify the most in-demand skills for various job roles by processing and analyzing a dataset of job listings.
+## 🚀 Project Highlights
 
-## 📁 Dataset
-- **File:** `clean_jobs.csv`
-- Contains job titles, descriptions, company names, locations, and extracted skills.
+- 🔍 Reads and processes **PDF resumes** using `PyPDF2`
+- 🧹 Cleans text using custom preprocessing with stopword removal
+- 🧠 Uses **TF-IDF + Cosine Similarity** to match resumes with job listings
+- 📊 Ranks job descriptions based on relevance to your resume
+- 📂 Built in **Google Colab** for easy use and reproducibility
 
-## 📌 Key Features
-- Text preprocessing and skill extraction using regex and custom functions.
-- Skill frequency analysis.
-- Aggregation of skill sets per job title.
-- Clean visual representation of the most demanded skills.
+## 🧰 Tech Stack
 
-## 🛠️ Tech Stack
-- Python
-- Pandas
-- NLP (regex-based extraction)
-- Matplotlib / Seaborn for visualization
-- Jupyter Notebook
+| Tool | Purpose |
+|------|---------|
+| `Python` | Core language |
+| `Pandas` | Data handling |
+| `scikit-learn` | TF-IDF + similarity |
+| `PyPDF2` | PDF resume parsing |
+| `Colab` | Interactive execution |
+| `regex` | Text cleaning |
 
-## 📊 Output
-Skill trends are visualized and analyzed to help identify top skills by job title.
+## 📁 File Structure
+
+```
+├── NLP_project.ipynb              # Original notebook
+├── clean_jobs.csv                 # Preprocessed job descriptions
+├── Siddhardha_Naidu_Gorja_Resume.pdf # Input resume file
+├── README.md                      # This file
+```
+
+## 📌 How It Works
+
+1. **Upload your resume** as a PDF in Colab.
+2. **Upload the cleaned job data** CSV.
+3. The notebook:
+   - Cleans and tokenizes both texts
+   - Converts them into TF-IDF vectors
+   - Scores each job using **cosine similarity**
+4. Outputs the **top job matches** along with match scores.
+
+## 📊 Sample Output
+
+```
+| Job Title                         | Similarity Score |
+|----------------------------------|------------------|
+| Data Analyst                     | 0.159            |
+| Data Scientist                   | 0.157            |
+| ICICI Securities - Data Analyst | 0.155            |
+```
+
+## ✅ Use Cases
+
+- Tailor your resume based on job fit
+- Identify **high-fit roles** to apply for
+- Use as a **resume booster project** on your portfolio or LinkedIn
+
+## 💡 Future Work
+
+- [ ] Add skill gap detection
+- [ ] Auto-generate custom cover letters
+- [ ] Deploy with Streamlit for web interface
+- [ ] Add resume section parsing with NLP
 
 ## 👨‍💻 Author
-Siddhardha Naidu Gorja
 
-## 📂 How to Run
-1. Open the notebook `NLP_job_skill_extraction.ipynb`.
-2. Run the cells in sequence.
-3. All dependencies are standard Python libraries.
+**Siddhardha Naidu Gorja**  
+📍 Koblenz, Germany  
+🔗 [LinkedIn](https://linkedin.com/in/siddhardha23g)  
+💻 [GitHub](https://github.com/siddhardh23)
 
----
+## 🧠 Bonus Tip for Recruiters
 
-> "Strebe nach Perfektion in allem, was du tust. Nimm das Beste, was existiert, und mache es besser."
+This project isn't just a demo — it's how I **tailor my applications** using NLP. Let’s talk data.
