@@ -1,8 +1,9 @@
-# Resume and Job Skill Matching using Transformers
+# Resume and Job Skill Matching using Hybrid NLP (Rule-Based + Transformers)
 
-This project began as a simple TF-IDF based resume–job description matcher. It worked, but it treated text like a pile of disconnected words. Now it uses modern NLP: RoBERTa embeddings and transformer-based NER. Same project, smarter engine.
+This project started as a TF-IDF matching system. It worked, but it only saw text as word counts. The updated version keeps the original idea but adds real language understanding by combining **rule-based skill extraction** with **transformer-based NER** and **RoBERTa embeddings**.
 
-The goal is still the same: extract skills, understand resumes, understand job descriptions and match them in a meaningful, context-aware way.
+Not a new project.  
+Just a smarter version of the original one.
 
 ---
 
@@ -10,101 +11,107 @@ The goal is still the same: extract skills, understand resumes, understand job d
 
 Given a resume and a set of job descriptions, the system:
 
-1. Extracts skills, tools, and key entities using a transformer-based NER model  
-2. Generates contextual embeddings using a RoBERTa SentenceTransformer model  
-3. Computes semantic similarity between the resume and each job description  
-4. Ranks and returns the best-fit roles  
+1. Extracts skills using **two methods together**:  
+   - A **rule-based skill dictionary / keyword matcher**  
+   - A **transformer-based NER model** (HuggingFace pipeline)
 
-The result is a job-matching pipeline that actually understands the text instead of counting keywords.
+2. Merges and deduplicates the extracted skills
+
+3. Generates contextual embeddings using a **RoBERTa SentenceTransformer**
+
+4. Computes similarity between the resume and job descriptions
+
+5. Ranks and returns the best-matching roles
+
+This hybrid approach mixes precision (rule-based) with intelligence (transformers).
 
 ---
 
-## 🔁 What’s New (Updated, Not Replaced)
+## 🧩 Why Hybrid Skill Extraction?
 
-| Old Approach (TF-IDF) | Updated Approach (Transformers) |
-|------------------------|---------------------------------|
-| Word frequency only | Full semantic meaning |
-| No entity awareness | NER-based skill extraction |
-| Basic cosine similarity | Embedding-level similarity |
-| Keyword overlap | Contextual understanding |
-| Limited accuracy | More realistic job-fit scoring |
+Your code doesn't rely on a single method. It uses both because:
 
-The project keeps its original workflow and purpose but upgrades the intelligence behind it.
+### Rule-based  
+✔ Very accurate for known skills  
+✔ Fast  
+✔ Good for domain-specific terms  
+➤ Weak at discovering new/hidden skills
+
+### Transformer NER  
+✔ Recognizes skills even if phrased differently  
+✔ Handles synonyms and variations  
+✔ Finds entities your skill list doesn’t know  
+➤ Can produce noise or miss niche technical terms
+
+### Both Together  
+You get the best of both.  
+High recall. High precision. No blind spots.
+
+---
+
+## 🔥 What’s New vs Original Version
+
+| Original Version (TF-IDF) | Updated Version (Hybrid + Transformers) |
+|---------------------------|------------------------------------------|
+| TF-IDF only | Rule-based extraction + transformer NER |
+| No entity recognition | Detects skills, tools, certifications |
+| Bag-of-words | Semantic RoBERTa embeddings |
+| Keyword overlap | Context-aware similarity |
+| Limited accuracy | Stronger, more realistic matching |
 
 ---
 
 ## 🧠 Why RoBERTa?
 
-RoBERTa is a better-trained, more stable sibling of BERT.  
-It handles semantic similarity very well and balances speed with accuracy.  
-Perfect for resume–job understanding without the overhead of huge LLMs.
+RoBERTa is a toughened-up BERT: better training, more robust, and ideal for semantic similarity.  
+SentenceTransformers gives clean embeddings ready for cosine similarity.
 
----
-
-## 🧩 Why NER?
-
-Resumes and job descriptions hide their most important info in long text blocks.  
-NER pulls out real entities:
-
-- Skills  
-- Tools / frameworks  
-- Roles  
-- Certifications  
-- Technologies  
-
-This makes matches more grounded and intentional.
+You chose RoBERTa because it balances accuracy and speed.
 
 ---
 
 ## 📌 Pipeline Overview
 
-**1. Parse Resume**  
-PDF text extraction with PyPDF2.
+**1. Extract text from resume (PDF → text)**  
+Via PyPDF2.
 
-**2. Clean + Normalize Text**  
-Lowercasing, special-character cleanup.
+**2. Clean and normalize text**  
+Lowercasing, regex cleanup, etc.
 
-**3. Extract Skills using NER**  
-Transformer-based token-classification pipeline.
+**3. Extract skills using TWO methods**  
+- Rule-based skill dictionary  
+- Transformer NER pipeline  
 
-**4. Generate Embeddings**  
-RoBERTa SentenceTransformer produces contextual vectors.
+**4. Merge + dedupe skills**  
+Your code does this explicitly.
 
-**5. Compute Similarity**  
-Cosine similarity between resume embedding and job embeddings.
+**5. Encode resume + job descriptions using RoBERTa**  
+SentenceTransformer embeddings.
 
-**6. Rank Matches**  
-Return highest scoring job descriptions.
+**6. Compute cosine similarity**  
+Compare resume embedding with each job embedding.
 
----
-
-
-These scores are now meaning-based, not keyword-based.
+**7. Output ranked matches**
 
 ---
-
 ## 🧰 Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| Python | Core language |
-| PyPDF2 | Resume PDF parsing |
-| Transformers | NER + embeddings |
-| SentenceTransformers | RoBERTa model |
-| PyTorch | Backend |
-| Pandas | Data manipulation |
-| scikit-learn | Cosine similarity |
-| Google Colab | Development environment |
+- Python  
+- PyPDF2  
+- Transformers (NER)  
+- SentenceTransformers (RoBERTa)  
+- PyTorch  
+- Pandas  
+- scikit-learn  
+- Google Colab/Notebook
 
----
+- ## 🚧 Future Improvements
 
-## 🚧 Future Improvements
+- Skill-gap detection  
+- Resume rewriting suggestions  
+- Job clustering / domain detection  
+- Web deployment (Streamlit)  
+- Fine-tuned domain-specific transformer model  
 
-- Skill-gap analysis  
-- Auto-rewriting resume sections  
-- Cluster jobs by domain  
-- Deploy with a Streamlit UI  
-- Fine-tune a domain-specific model  
-
-
+## 📊 Sample Output
 
