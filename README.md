@@ -113,5 +113,5 @@ Compare resume embedding with each job embedding.
 - Web deployment (Streamlit)  
 - Fine-tuned domain-specific transformer model  
 
-## 📊 Sample Output
+
 
