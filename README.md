@@ -1,75 +1,110 @@
-# 📄 Resume-to-Job Matching using NLP
+# Resume and Job Skill Matching using Transformers
 
-An end-to-end NLP project that compares a candidate’s resume with job descriptions to compute a **similarity score** and recommend the best-fit roles.
+This project began as a simple TF-IDF based resume–job description matcher. It worked, but it treated text like a pile of disconnected words. Now it uses modern NLP: RoBERTa embeddings and transformer-based NER. Same project, smarter engine.
 
-## 🚀 Project Highlights
+The goal is still the same: extract skills, understand resumes, understand job descriptions and match them in a meaningful, context-aware way.
 
-- 🔍 Reads and processes **PDF resumes** using `PyPDF2`
-- 🧹 Cleans text using custom preprocessing with stopword removal
-- 🧠 Uses **TF-IDF + Cosine Similarity** to match resumes with job listings
-- 📊 Ranks job descriptions based on relevance to your resume
-- 📂 Built in **Google Colab** for easy use and reproducibility
+---
+
+## 🚀 What This Project Does
+
+Given a resume and a set of job descriptions, the system:
+
+1. Extracts skills, tools, and key entities using a transformer-based NER model  
+2. Generates contextual embeddings using a RoBERTa SentenceTransformer model  
+3. Computes semantic similarity between the resume and each job description  
+4. Ranks and returns the best-fit roles  
+
+The result is a job-matching pipeline that actually understands the text instead of counting keywords.
+
+---
+
+## 🔁 What’s New (Updated, Not Replaced)
+
+| Old Approach (TF-IDF) | Updated Approach (Transformers) |
+|------------------------|---------------------------------|
+| Word frequency only | Full semantic meaning |
+| No entity awareness | NER-based skill extraction |
+| Basic cosine similarity | Embedding-level similarity |
+| Keyword overlap | Contextual understanding |
+| Limited accuracy | More realistic job-fit scoring |
+
+The project keeps its original workflow and purpose but upgrades the intelligence behind it.
+
+---
+
+## 🧠 Why RoBERTa?
+
+RoBERTa is a better-trained, more stable sibling of BERT.  
+It handles semantic similarity very well and balances speed with accuracy.  
+Perfect for resume–job understanding without the overhead of huge LLMs.
+
+---
+
+## 🧩 Why NER?
+
+Resumes and job descriptions hide their most important info in long text blocks.  
+NER pulls out real entities:
+
+- Skills  
+- Tools / frameworks  
+- Roles  
+- Certifications  
+- Technologies  
+
+This makes matches more grounded and intentional.
+
+---
+
+## 📌 Pipeline Overview
+
+**1. Parse Resume**  
+PDF text extraction with PyPDF2.
+
+**2. Clean + Normalize Text**  
+Lowercasing, special-character cleanup.
+
+**3. Extract Skills using NER**  
+Transformer-based token-classification pipeline.
+
+**4. Generate Embeddings**  
+RoBERTa SentenceTransformer produces contextual vectors.
+
+**5. Compute Similarity**  
+Cosine similarity between resume embedding and job embeddings.
+
+**6. Rank Matches**  
+Return highest scoring job descriptions.
+
+---
+
+
+These scores are now meaning-based, not keyword-based.
+
+---
 
 ## 🧰 Tech Stack
 
 | Tool | Purpose |
 |------|---------|
-| `Python` | Core language |
-| `Pandas` | Data handling |
-| `scikit-learn` | TF-IDF + similarity |
-| `PyPDF2` | PDF resume parsing |
-| `Colab` | Interactive execution |
-| `regex` | Text cleaning |
+| Python | Core language |
+| PyPDF2 | Resume PDF parsing |
+| Transformers | NER + embeddings |
+| SentenceTransformers | RoBERTa model |
+| PyTorch | Backend |
+| Pandas | Data manipulation |
+| scikit-learn | Cosine similarity |
+| Google Colab | Development environment |
 
-## 📁 File Structure
+---
 
-```
-├── NLP_project.ipynb              # Original notebook
-├── clean_jobs.csv                 # Preprocessed job descriptions
-├── Siddhardha_Naidu_Gorja_Resume.pdf # Input resume file
-├── README.md                      # This file
-```
+## 🚧 Future Improvements
 
-## 📌 How It Works
+- Skill-gap analysis  
+- Auto-rewriting resume sections  
+- Cluster jobs by domain  
+- Deploy with a Streamlit UI  
+- Fine-tune a domain-specific model  
 
-1. **Upload your resume** as a PDF in Colab.
-2. **Upload the cleaned job data** CSV.
-3. The notebook:
-   - Cleans and tokenizes both texts
-   - Converts them into TF-IDF vectors
-   - Scores each job using **cosine similarity**
-4. Outputs the **top job matches** along with match scores.
 
-## 📊 Sample Output
 
-```
-| Job Title                         | Similarity Score |
-|----------------------------------|------------------|
-| Data Analyst                     | 0.159            |
-| Data Scientist                   | 0.157            |
-| ICICI Securities - Data Analyst | 0.155            |
-```
-
-## ✅ Use Cases
-
-- Tailor your resume based on job fit
-- Identify **high-fit roles** to apply for
-- Use as a **resume booster project** on your portfolio or LinkedIn
-
-## 💡 Future Work
-
-- [ ] Add skill gap detection
-- [ ] Auto-generate custom cover letters
-- [ ] Deploy with Streamlit for web interface
-- [ ] Add resume section parsing with NLP
-
-## 👨‍💻 Author
-
-**Siddhardha Naidu Gorja**  
-📍 Koblenz, Germany  
-🔗 [LinkedIn](https://linkedin.com/in/siddhardha23g)  
-💻 [GitHub](https://github.com/siddhardh23)
-
-## 🧠 Bonus Tip for Recruiters
-
-This project isn't just a demo — it's how I **tailor my applications** using NLP. Let’s talk data.
