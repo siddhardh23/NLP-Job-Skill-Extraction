@@ -1,75 +1,117 @@
-# 📄 Resume-to-Job Matching using NLP
+# Resume and Job Skill Matching using Hybrid NLP (Rule-Based + Transformers)
 
-An end-to-end NLP project that compares a candidate’s resume with job descriptions to compute a **similarity score** and recommend the best-fit roles.
+This project started as a TF-IDF matching system. It worked, but it only saw text as word counts. The updated version keeps the original idea but adds real language understanding by combining **rule-based skill extraction** with **transformer-based NER** and **RoBERTa embeddings**.
 
-## 🚀 Project Highlights
+Not a new project.  
+Just a smarter version of the original one.
 
-- 🔍 Reads and processes **PDF resumes** using `PyPDF2`
-- 🧹 Cleans text using custom preprocessing with stopword removal
-- 🧠 Uses **TF-IDF + Cosine Similarity** to match resumes with job listings
-- 📊 Ranks job descriptions based on relevance to your resume
-- 📂 Built in **Google Colab** for easy use and reproducibility
+---
 
+## 🚀 What This Project Does
+
+Given a resume and a set of job descriptions, the system:
+
+1. Extracts skills using **two methods together**:  
+   - A **rule-based skill dictionary / keyword matcher**  
+   - A **transformer-based NER model** (HuggingFace pipeline)
+
+2. Merges and deduplicates the extracted skills
+
+3. Generates contextual embeddings using a **RoBERTa SentenceTransformer**
+
+4. Computes similarity between the resume and job descriptions
+
+5. Ranks and returns the best-matching roles
+
+This hybrid approach mixes precision (rule-based) with intelligence (transformers).
+
+---
+
+## 🧩 Why Hybrid Skill Extraction?
+
+Your code doesn't rely on a single method. It uses both because:
+
+### Rule-based  
+✔ Very accurate for known skills  
+✔ Fast  
+✔ Good for domain-specific terms  
+➤ Weak at discovering new/hidden skills
+
+### Transformer NER  
+✔ Recognizes skills even if phrased differently  
+✔ Handles synonyms and variations  
+✔ Finds entities your skill list doesn’t know  
+➤ Can produce noise or miss niche technical terms
+
+### Both Together  
+You get the best of both.  
+High recall. High precision. No blind spots.
+
+---
+
+## 🔥 What’s New vs Original Version
+
+| Original Version (TF-IDF) | Updated Version (Hybrid + Transformers) |
+|---------------------------|------------------------------------------|
+| TF-IDF only | Rule-based extraction + transformer NER |
+| No entity recognition | Detects skills, tools, certifications |
+| Bag-of-words | Semantic RoBERTa embeddings |
+| Keyword overlap | Context-aware similarity |
+| Limited accuracy | Stronger, more realistic matching |
+
+---
+
+## 🧠 Why RoBERTa?
+
+RoBERTa is a toughened-up BERT: better training, more robust, and ideal for semantic similarity.  
+SentenceTransformers gives clean embeddings ready for cosine similarity.
+
+You chose RoBERTa because it balances accuracy and speed.
+
+---
+
+## 📌 Pipeline Overview
+
+**1. Extract text from resume (PDF → text)**  
+Via PyPDF2.
+
+**2. Clean and normalize text**  
+Lowercasing, regex cleanup, etc.
+
+**3. Extract skills using TWO methods**  
+- Rule-based skill dictionary  
+- Transformer NER pipeline  
+
+**4. Merge + dedupe skills**  
+Your code does this explicitly.
+
+**5. Encode resume + job descriptions using RoBERTa**  
+SentenceTransformer embeddings.
+
+**6. Compute cosine similarity**  
+Compare resume embedding with each job embedding.
+
+**7. Output ranked matches**
+
+---
 ## 🧰 Tech Stack
 
-| Tool | Purpose |
-|------|---------|
-| `Python` | Core language |
-| `Pandas` | Data handling |
-| `scikit-learn` | TF-IDF + similarity |
-| `PyPDF2` | PDF resume parsing |
-| `Colab` | Interactive execution |
-| `regex` | Text cleaning |
+- Python  
+- PyPDF2  
+- Transformers (NER)  
+- SentenceTransformers (RoBERTa)  
+- PyTorch  
+- Pandas  
+- scikit-learn  
+- Google Colab/Notebook
 
-## 📁 File Structure
+- ## 🚧 Future Improvements
 
-```
-├── NLP_project.ipynb              # Original notebook
-├── clean_jobs.csv                 # Preprocessed job descriptions
-├── Siddhardha_Naidu_Gorja_Resume.pdf # Input resume file
-├── README.md                      # This file
-```
+- Skill-gap detection  
+- Resume rewriting suggestions  
+- Job clustering / domain detection  
+- Web deployment (Streamlit)  
+- Fine-tuned domain-specific transformer model  
 
-## 📌 How It Works
 
-1. **Upload your resume** as a PDF in Colab.
-2. **Upload the cleaned job data** CSV.
-3. The notebook:
-   - Cleans and tokenizes both texts
-   - Converts them into TF-IDF vectors
-   - Scores each job using **cosine similarity**
-4. Outputs the **top job matches** along with match scores.
 
-## 📊 Sample Output
-
-```
-| Job Title                         | Similarity Score |
-|----------------------------------|------------------|
-| Data Analyst                     | 0.159            |
-| Data Scientist                   | 0.157            |
-| ICICI Securities - Data Analyst | 0.155            |
-```
-
-## ✅ Use Cases
-
-- Tailor your resume based on job fit
-- Identify **high-fit roles** to apply for
-- Use as a **resume booster project** on your portfolio or LinkedIn
-
-## 💡 Future Work
-
-- [ ] Add skill gap detection
-- [ ] Auto-generate custom cover letters
-- [ ] Deploy with Streamlit for web interface
-- [ ] Add resume section parsing with NLP
-
-## 👨‍💻 Author
-
-**Siddhardha Naidu Gorja**  
-📍 Koblenz, Germany  
-🔗 [LinkedIn](https://linkedin.com/in/siddhardha23g)  
-💻 [GitHub](https://github.com/siddhardh23)
-
-## 🧠 Bonus Tip for Recruiters
-
-This project isn't just a demo — it's how I **tailor my applications** using NLP. Let’s talk data.
